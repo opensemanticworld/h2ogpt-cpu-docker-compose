@@ -67,14 +67,14 @@ RUN apt-get update \
     && bash -c "echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google-chrome.list" \
     && apt -y update \
     && apt -y install google-chrome-stable \
-    && google-chrome --version  # e.g. Google Chrome 114.0.5735.198 \
-    # visit https://chromedriver.chromium.org/downloads and download matching version
-    && wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chromedriver-linux64.zip \
-    && unzip chromedriver_linux64.zip \
-    && sudo mv chromedriver /usr/bin/chromedriver \
-    && sudo chown root:root /usr/bin/chromedriver \
-    && sudo chmod +x /usr/bin/chromedriver \
-    && cd /
+    && CHROMEVER=$(google-chrome --product-version | grep -o "[^\.]*\.[^\.]*\.[^\.]*") \
+    && DRIVERVER=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_$CHROMEVER") \
+    && wget "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$DRIVERVER/linux64/chromedriver-linux64.zip" \
+    && unzip chromedriver-linux64.zip \
+    && mv chromedriver-linux64/chromedriver /usr/bin/chromedriver \
+    && chown root:root /usr/bin/chromedriver \
+    && chmod +x /usr/bin/chromedriver \
+    && rm -R chromedriver-linux64
 
 # preload model (~7GB => skip and download on demand at runtime)
 #RUN \
