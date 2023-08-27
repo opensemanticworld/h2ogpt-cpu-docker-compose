@@ -59,6 +59,23 @@ RUN cd h2ogpt \
     # Optional but required for PlayWright
     && playwright install --with-deps
 
+# install Chrome for Selenium (TODO: Replace with OpenSource alternative)
+RUN apt-get update \
+    && apt install -y unzip xvfb libxi6 libgconf-2-4 \
+    && apt install -y default-jdk \
+    && curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add \
+    && bash -c "echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google-chrome.list" \
+    && apt -y update \
+    && apt -y install google-chrome-stable \
+    && google-chrome --version  # e.g. Google Chrome 114.0.5735.198 \
+    # visit https://chromedriver.chromium.org/downloads and download matching version
+    && wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chromedriver-linux64.zip \
+    && unzip chromedriver_linux64.zip \
+    && sudo mv chromedriver /usr/bin/chromedriver \
+    && sudo chown root:root /usr/bin/chromedriver \
+    && sudo chmod +x /usr/bin/chromedriver \
+    && cd /
+
 # preload model (~7GB => skip and download on demand at runtime)
 #RUN \
 #    && wget https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/resolve/main/llama-2-7b-chat.ggmlv3.q8_0.bin
@@ -66,8 +83,6 @@ RUN cd h2ogpt \
 #RUN cd h2ogpt \
 #    && mkdir "userdata" \
 #    && echo "A XYZ-Document is document containing only the letters X,Y and Z" >> "userdata/test.txt"
-
-#RUN sudo ulimit -l unlimited
 
 #EXPOSE 7860
 
