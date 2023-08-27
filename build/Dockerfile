@@ -76,6 +76,8 @@ RUN apt-get update \
     && chmod +x /usr/bin/chromedriver \
     && rm -R chromedriver-linux64
 
+RUN pip install pyvirtualdisplay osw
+
 # preload model (~7GB => skip and download on demand at runtime)
 #RUN \
 #    && wget https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/resolve/main/llama-2-7b-chat.ggmlv3.q8_0.bin

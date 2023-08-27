@@ -58,5 +58,12 @@ services:
     ]
 ```
 
+## Usage
+
+### Scrape wiki pages
+```bash
+docker compose exec h2ogpt conda run -n h2ogpt python /app/scrape.py
+```
+
 ## Known problems
 Container randomly crashes (and restarts) due to a segmentation fault

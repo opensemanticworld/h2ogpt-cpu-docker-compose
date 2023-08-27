@@ -9,8 +9,13 @@ services:
     ulimits:
       memlock: -1
     restart: unless-stopped
+    environment:
+      - WIKI_SERVER=${WIKI_SERVER}
+      - WIKI_USERNAME=${WIKI_USERNAME}
+      - WIKI_PASSWORD=${WIKI_PASSWORD}
     volumes:
       - ./data:/userdata
+      - ./app:/app
     # cmd line options see: https://github.com/h2oai/h2ogpt/blob/a79ffea12b26ffcdcfc388e5e0819d86470f3c1d/src/gen.py#L215
     entrypoint: [
       "conda", "run", "--no-capture-output", "-n", "h2ogpt", 
