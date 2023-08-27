@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  h2ogpt:
+    image: opensemanticworld/h2ogpt-cpu
+    build:
+      context: ./build
+    container_name: h2ogpt
+    shm_size: '2gb'
+    ulimits:
+      memlock: -1
+    restart: unless-stopped
+    volumes:
+      - ./data:/userdata
+    # cmd line options see: https://github.com/h2oai/h2ogpt/blob/a79ffea12b26ffcdcfc388e5e0819d86470f3c1d/src/gen.py#L215
+    entrypoint: [
+      "conda", "run", "--no-capture-output", "-n", "h2ogpt", 
+      "python", "h2ogpt/generate.py", 
+      "--base_model='llama'", 
+      "--prompt_type=llama2", 
+      "--score_model=None", 
+      "--langchain_mode='UserData'", 
+      "--user_path=userdata",
+      "--detect_user_path_changes_every_query=True"
+    ]
