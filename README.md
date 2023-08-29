@@ -54,7 +54,8 @@ services:
       "--visible_system_tab=False", 
       "--visible_tos_tab=False", 
       "--visible_hosts_tab=False", 
-      "--chat_tabless=True"
+      "--chat_tables=True",
+      "--visible_h2ogpt_header=False"
     ]
 ```
 
