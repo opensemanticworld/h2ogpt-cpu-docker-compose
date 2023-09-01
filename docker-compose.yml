@@ -15,7 +15,7 @@ services:
       - WIKI_PASSWORD=${WIKI_PASSWORD}
     volumes:
       - ./data:/userdata
-      - ./app:/app
+    #  - ./app:/app
     # cmd line options see: https://github.com/h2oai/h2ogpt/blob/a79ffea12b26ffcdcfc388e5e0819d86470f3c1d/src/gen.py#L215
     entrypoint: [
       "conda", "run", "--no-capture-output", "-n", "h2ogpt", 
