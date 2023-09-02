@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   h2ogpt:
-    image: opensemanticworld/h2ogpt-cpu
+    image: opensemanticworld/h2ogpt-cpu:amd
     build:
       context: ./build
     container_name: h2ogpt

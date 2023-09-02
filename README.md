@@ -67,4 +67,15 @@ docker compose exec h2ogpt conda run -n h2ogpt python /app/scrape.py
 ```
 
 ## Known problems
+
+### AVX512 Flag
+Please note: images compiled on a host with Intel CPU with AVX512 flag enabled are not runable on a AMD host.
+Use the amd labeled version or build the image directly on your host if you run into an `Illegal instruction` error. (see also https://github.com/h2oai/h2ogpt/issues/675)
+
+To get information about your CPU flags, run 
+```bash
+grep avx /proc/cpuinfo
+```
+
+### Stability
 Container randomly crashes (and restarts) due to a segmentation fault
